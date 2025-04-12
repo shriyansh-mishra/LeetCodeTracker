@@ -27,8 +27,8 @@ A comprehensive web application for tracking and visualizing coding profiles acr
 
 ## 📸 Screenshot
 
-![Dashboard Screenshot](./assets/screenshot.png)  
-![Dashboard Screenshot](./assets/screenshot2.png)
+![Dashboard Screenshot](./js-project/assets/screenshot.png)  
+![Dashboard Screenshot](./js-project/assets/screenshot2.png)
 *Example of the unified dashboard displaying coding stats.*
 
 ---
