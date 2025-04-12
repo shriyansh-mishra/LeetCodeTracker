@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding Profile Tracker</title>
+  <!-- Bootstrap for styling -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Coding Profile Tracker</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item" id="dashboard-nav-item" style="display: none;">
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+          </li>
+        </ul>
+        <div class="d-flex" id="auth-buttons">
+          <a href="/login" class="btn btn-outline-light me-2">Login</a>
+          <a href="/signup" class="btn btn-light">Sign Up</a>
+        </div>
+        <div class="dropdown" id="user-dropdown" style="display: none;">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            <span id="username-display"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+            <li><a class="dropdown-item" href="/settings">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" id="logout-button">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content area -->
+  <main id="app-content">
+    <!-- Content will be loaded here by router -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Coding Profile Tracker</h5>
+          <p>Track and visualize your coding journey across multiple platforms.</p>
+        </div>
+        <div class="col-md-3">
+          <h5>Platforms</h5>
+          <ul class="list-unstyled">
+            <li><a href="https://leetcode.com" target="_blank" class="text-white">LeetCode</a></li>
+            <li><a href="https://geeksforgeeks.org" target="_blank" class="text-white">GeeksforGeeks</a></li>
+            <li><a href="https://codeforces.com" target="_blank" class="text-white">CodeForces</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h5>Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="/" class="text-white">Home</a></li>
+            <li><a href="/dashboard" class="text-white">Dashboard</a></li>
+            <li><a href="/about" class="text-white">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+      <div class="text-center">
+        <p>&copy; 2023 Coding Profile Tracker. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Templates for different pages -->
+  <!-- Home Page Template -->
+  <template id="home-template">
+    <div class="container py-5">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="display-4 fw-bold mb-4">Track Your Coding Progress Across Platforms</h1>
+          <p class="lead mb-4">Connect your LeetCode, GeeksforGeeks, and CodeForces accounts to visualize your coding journey in one dashboard.</p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a href="/signup" class="btn btn-primary btn-lg px-4 me-md-2">Get Started</a>
+            <a href="/about" class="btn btn-outline-secondary btn-lg px-4">Learn More</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <img src="/img/dashboard-preview.png" alt="Dashboard Preview" class="img-fluid rounded shadow-lg">
+        </div>
+      </div>
+
+      <div class="row mt-5 pt-5">
+        <div class="col-12 text-center">
+          <h2 class="fw-bold mb-4">Supported Platforms</h2>
+          <p class="lead mb-5">Integrate your profiles from the most popular competitive programming websites</p>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="mb-3">
+                <i class="fab fa-lg fa-java platform-icon leetcode-icon"></i>
+              </div>
+              <h3 class="card-title">LeetCode</h3>
+              <p class="card-text">Track your problem-solving progress, submission activity, and contest performance on LeetCode.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="mb-3">
+                <i class="fas fa-lg fa-code platform-icon gfg-icon"></i>
+              </div>
+              <h3 class="card-title">GeeksforGeeks</h3>
+              <p class="card-text">Monitor your GeeksforGeeks profile, including coding score, problem count, and institute ranking.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="mb-3">
+                <i class="fas fa-lg fa-chart-line platform-icon codeforces-icon"></i>
+              </div>
+              <h3 class="card-title">CodeForces</h3>
+              <p class="card-text">Visualize your CodeForces rating history, contest participation, and problem submission statistics.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5 pt-5">
+        <div class="col-12 text-center">
+          <h2 class="fw-bold mb-4">Features</h2>
+          <p class="lead mb-5">Everything you need to track and improve your coding skills</p>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
+        <div class="col">
+          <div class="feature-card text-center p-4">
+            <div class="icon-wrapper mb-3">
+              <i class="fas fa-chart-bar feature-icon"></i>
+            </div>
+            <h4>Statistics Dashboard</h4>
+            <p>Comprehensive statistics across all your coding platforms in one place.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="feature-card text-center p-4">
+            <div class="icon-wrapper mb-3">
+              <i class="fas fa-calendar-alt feature-icon"></i>
+            </div>
+            <h4>Activity Tracking</h4>
+            <p>Visual heatmaps showing your daily coding activity and consistency.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="feature-card text-center p-4">
+            <div class="icon-wrapper mb-3">
+              <i class="fas fa-trophy feature-icon"></i>
+            </div>
+            <h4>Achievements</h4>
+            <p>Badges and achievements based on your performance across platforms.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="feature-card text-center p-4">
+            <div class="icon-wrapper mb-3">
+              <i class="fas fa-code feature-icon"></i>
+            </div>
+            <h4>Language Analysis</h4>
+            <p>Breakdown of programming languages you use and your proficiency in each.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Login Page Template -->
+  <template id="login-template">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center py-3">
+              <h3 class="mb-0">Log In</h3>
+            </div>
+            <div class="card-body p-4">
+              <div class="alert alert-danger" id="login-error" style="display: none;"></div>
+              
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary" id="login-submit">Log In</button>
+                </div>
+              </form>
+              
+              <div class="text-center mt-3">
+                <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Signup Page Template -->
+  <template id="signup-template">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center py-3">
+              <h3 class="mb-0">Create an Account</h3>
+            </div>
+            <div class="card-body p-4">
+              <div class="alert alert-danger" id="signup-error" style="display: none;"></div>
+              
+              <form id="signup-form">
+                <div class="mb-3">
+                  <label for="signup-username" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="signup-username" name="username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="signup-email" name="email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="signup-password" name="password" required>
+                </div>
+                
+                <div class="mb-3 text-center">
+                  <small class="text-muted">You'll be able to connect your coding profiles from the dashboard after signing up.</small>
+                </div>
+                
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary" id="signup-submit">Create Account</button>
+                </div>
+              </form>
+              
+              <div class="text-center mt-3">
+                <p>Already have an account? <a href="/login">Log In</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Dashboard Page Template -->
+  <template id="dashboard-template">
+    <div class="container-fluid py-4">
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between flex-wrap">
+                <div class="d-flex align-items-center">
+                  <div class="avatar-circle me-3">
+                    <i class="fas fa-user-circle fa-3x"></i>
+                  </div>
+                  <div>
+                    <h2 class="mb-0" id="dashboard-username"></h2>
+                    <div class="platform-badges mt-2" id="platform-badges"></div>
+                  </div>
+                </div>
+                <div class="mt-3 mt-md-0 d-flex">
+                  <button class="btn btn-success me-2" id="add-platform-button">
+                    <i class="fas fa-plus-circle me-2"></i>Add Platform
+                  </button>
+                  <button class="btn btn-outline-primary" id="refresh-all-button">
+                    <i class="fas fa-sync-alt me-2"></i>Refresh All Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Platform Toggle Bar -->
+      <div class="row mb-4" id="platform-toggle-container-row" style="display: none;">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-body py-3">
+              <div class="platform-toggle-container" id="platform-toggle-container">
+                <!-- Platform toggle buttons will be generated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Add Platform Modal -->
+      <div class="modal fade" id="add-platform-modal" tabindex="-1" aria-labelledby="add-platform-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="add-platform-modal-label">Connect Coding Platform</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger" id="add-platform-error" style="display: none;"></div>
+              
+              <form id="add-platform-form">
+                <div class="mb-3">
+                  <label for="platform-type" class="form-label">Platform</label>
+                  <select class="form-select" id="platform-type" name="platformType" required>
+                    <option value="" disabled selected>Select a platform</option>
+                    <option value="leetcode">LeetCode</option>
+                    <option value="geeksforgeeks">GeeksForGeeks</option>
+                    <option value="codeforces">CodeForces</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="platform-username" class="form-label">Username</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="platform-username" name="username" required>
+                    <button class="btn btn-outline-secondary verify-button" type="button" id="platform-verify-button">
+                      Verify
+                    </button>
+                  </div>
+                  <div class="form-text text-muted" id="platform-username-status"></div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="add-platform-submit" disabled>Connect Platform</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Delete Platform Confirmation Modal -->
+      <div class="modal fade" id="delete-platform-modal" tabindex="-1" aria-labelledby="delete-platform-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="delete-platform-modal-label">Confirm Deletion</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to disconnect your <span id="delete-platform-name"></span> account?</p>
+              <p>All related statistics and data will be removed.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="delete-platform-confirm">Disconnect Platform</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+              <h5 class="card-title mb-0">Platforms</h5>
+            </div>
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush platform-list" id="platform-list"></ul>
+            </div>
+          </div>
+
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+              <h5 class="card-title mb-0">Achievements</h5>
+            </div>
+            <div class="card-body" id="achievements-section">
+              <div class="text-center text-muted py-5">
+                <i class="fas fa-trophy fa-3x mb-3"></i>
+                <p>Select a platform to view achievements</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <div class="platform-overview" id="platform-overview">
+            <div class="text-center text-muted py-5">
+              <i class="fas fa-chart-bar fa-3x mb-3"></i>
+              <p>Select a platform from the sidebar to view detailed statistics</p>
+            </div>
+          </div>
+
+          <div class="platform-details" id="platform-details" style="display: none;">
+            <div class="row">
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card stat-card shadow-sm">
+                  <div class="card-body">
+                    <div class="stat-icon">
+                      <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h5 class="stat-label">Problems Solved</h5>
+                    <h3 class="stat-value" id="problems-solved">0</h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card stat-card shadow-sm">
+                  <div class="card-body">
+                    <div class="stat-icon">
+                      <i class="fas fa-code"></i>
+                    </div>
+                    <h5 class="stat-label">Total Submissions</h5>
+                    <h3 class="stat-value" id="total-submissions">0</h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card stat-card shadow-sm">
+                  <div class="card-body">
+                    <div class="stat-icon">
+                      <i class="fas fa-trophy"></i>
+                    </div>
+                    <h5 class="stat-label">Ranking</h5>
+                    <h3 class="stat-value" id="user-ranking">-</h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card stat-card shadow-sm">
+                  <div class="card-body">
+                    <div class="stat-icon">
+                      <i class="fas fa-medal"></i>
+                    </div>
+                    <h5 class="stat-label">Contests</h5>
+                    <h3 class="stat-value" id="contest-count">0</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-8 mb-4">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Submission Activity</h5>
+                    <div class="card-tools">
+                      <button class="btn btn-sm btn-outline-secondary" id="refresh-submissions-button">
+                        <i class="fas fa-sync-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div id="submission-chart" style="height: 250px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">Languages Used</h5>
+                  </div>
+                  <div class="card-body">
+                    <div id="language-chart" style="height: 250px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 mb-4">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">Contest History</h5>
+                  </div>
+                  <div class="card-body p-0">
+                    <div id="contest-history"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-7 mb-4">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">Problem Difficulty Breakdown</h5>
+                  </div>
+                  <div class="card-body">
+                    <div id="difficulty-breakdown"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
+  <!-- App Scripts -->
+  <script src="/js/router.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
