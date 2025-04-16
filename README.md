@@ -105,7 +105,7 @@ A comprehensive web application for tracking and visualizing coding profiles acr
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request!!
+Contributions are welcome! Please feel free to submit a Pull Request!!!
 
 ## License
 
