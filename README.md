@@ -86,9 +86,9 @@ A comprehensive web application for tracking and visualizing coding profiles acr
 
 ### Platform Verification Endpoints
 
-- `POST /api/verify/leetcode` - Verify a LeetCode username
-- `POST /api/verify/geeksforgeeks` - Verify a GeeksForGeeks username
-- `POST /api/verify/codeforces` - Verify a CodeForces username
+- `POST /api/verify/leetcode` - Verify LeetCode username
+- `POST /api/verify/geeksforgeeks` - Verify GeeksForGeeks username
+- `POST /api/verify/codeforces` - Verify CodeForces username
 
 ### Dashboard Endpoints
 
