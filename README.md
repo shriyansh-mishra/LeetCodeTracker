@@ -103,7 +103,7 @@ A comprehensive web application for tracking and visualizing coding profiles acr
 - GeeksForGeeks API: [github.com/pratham1singh/API-To-Fetch-GFG-user-Data](https://github.com/pratham1singh/API-To-Fetch-GFG-user-Data)
 - CodeForces API: [github.com/mahmudulahsan/my-CodeForces-web-app](https://github.com/mahmudulahsan/my-CodeForces-web-app)
 
-## Contributing
+## Contribution
 
 Contributions are welcome!! Please feel free to submit a Pull Request!!!
 
